@@ -1,9 +1,10 @@
 from django.urls import path
-from .views import TodosAPIView, TodoGetAPIView
+from .views import TodosAPIView, TodoGetAPIView, TodoCreateAPIView
 
 app_name = 'todo'
 
 urlpatterns = [
-    path('GET/', TodosAPIView.as_view()),
-    path('GET/<int:pk>/', TodoGetAPIView.as_view()),
+    path('get/list/', TodosAPIView.as_view()),
+    path('get/list/<int:pk>/', TodoGetAPIView.as_view()),
+    path('post/list/', TodoCreateAPIView.as_view()),
 ]

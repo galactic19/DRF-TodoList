@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 from rest_framework.generics import get_object_or_404
 
 from .models import Todo
-from .serializers import TodoSimpleSerializer, TodoDetailSerializer
+from .serializers import TodoSimpleSerializer, TodoDetailSerializer, TodoCreateSerializer
 
 class TodosAPIView(APIView):
     def get(self, request):
@@ -19,3 +19,14 @@ class TodoGetAPIView(APIView):
         todo = get_object_or_404(Todo, pk=pk)
         serializer = TodoDetailSerializer(todo)
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    
+class TodoCreateAPIView(APIView):
+    def post(self, request):
+        serializer = TodoCreateSerializer(request.data)
+        
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        
+        return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
